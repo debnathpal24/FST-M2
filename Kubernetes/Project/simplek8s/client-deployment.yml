@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+      #app: client-deployment
+  template:
+    metadata:
+      labels:
+        component: web
+        #app: client-deployment
+    spec:
+        containers:
+            - name: client-deployment
+              image: debnathpal/complex_client #:v1
+              resources:
+                  limits:
+                    memory: "128Mi"
+                    cpu: "500m"
+              ports:
+                  - containerPort: 3000
