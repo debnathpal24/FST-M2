@@ -1,0 +1,14 @@
+version: '3' 
+services:
+    redis_db:
+        image: 'redis'
+        volumes:
+          - ./data:/data
+          #- ./:/usr/app
+          #- /usr/app/node_modules #bookmark to dont sync
+        command: ["redis-server","--save","1 1"]  
+    node_app:
+        build: ./ #need to give contextpath and dockerfile name instead just using ./
+        image: "debnathpal/visits" #by default node_app image will create but now we mentioned the image
+        ports:
+            - "8081:8081"
