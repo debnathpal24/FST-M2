@@ -1,0 +1,21 @@
+---
+- name: Configure application server
+  hosts: app_server
+  remote_user: root
+
+  tasks:
+  - name: Install required packages
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Start and enable httpd service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - name: Write the httpd config file
+    template:
+      src: /srv/httpd.j2
+      dest: /etc/httpd.conf

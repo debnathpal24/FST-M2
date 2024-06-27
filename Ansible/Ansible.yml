@@ -1,0 +1,8 @@
+---
+- name: My Ansible Playbook
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Print current date and time
+      debug:
+        msg: "Current date and time is {{ ansible_date_time.date }} {{ ansible_date_time.time }}"
