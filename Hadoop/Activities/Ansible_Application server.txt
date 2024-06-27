@@ -1,0 +1,43 @@
+---
+- name: Configure Application Server
+  hosts: app_servers
+  become: yes
+  vars:
+    http_port: 80
+    max_clients: 200
+
+  tasks:
+    - name: Install Apache web server
+      ansible.builtin.yum:
+        name: httpd
+        state: latest
+
+    - name: Start Apache service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Copy application files
+      ansible.builtin.copy:
+        src: C:\Users\04813X\Desktop\debnathpal\Full Stack Tester\Module 2\BigData\sourceFile
+        dest: /var/www/html/
+        owner: apache
+        group: apache
+        mode: '0644'
+
+    - name: Configure firewall
+      ansible.builtin.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+
+    - name: Set HTTP port and max clients in Apache config
+      ansible.builtin.lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^{{ item.option }}'
+        line: '{{ item.option }} {{ item.value }}'
+        state: present
+      loop:
+        - { option: 'Listen', value: '{{ http_port }}' }
+        - { option: 'MaxClients', value: '{{ max_clients }}' }

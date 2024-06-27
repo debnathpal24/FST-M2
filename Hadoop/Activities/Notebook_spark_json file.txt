@@ -1,0 +1,10 @@
+df = spark.read.option("multiline", "true").json("C:\Users\04813X\Desktop\debnathpal\Full Stack Tester\Module 2\BigData\jsonInput.json")
+# Read the JSON file
+df = spark.read.json("input.json")
+
+# Perform transformations
+filtered_df = df.filter(df["id"] == "ABC")
+
+# Write the transformed data to a new JSON file
+filtered_df.write.json("output.json")
+

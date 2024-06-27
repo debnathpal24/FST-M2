@@ -1,0 +1,6 @@
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("YourAppName").getOrCreate()
+df = spark.read.csv("C:\Users\04813X\Desktop\debnathpal\Full Stack Tester\Module 2\dataFile1.csv", header=True, inferSchema=True)
+processed_df = df.select("column1", "column2").filter(df["column1"] > 0)
+
+processed_df.write.csv("C:\Users\04813X\Desktop\debnathpal\Full Stack Tester\Module 2\outputFile.csv")

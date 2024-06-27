@@ -1,0 +1,14 @@
+pip install pyspark
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("YourAppName").getOrCreate()
+df = spark.read.text("path_to_your_text_file.txt")
+
+from pyspark.sql.types import StructType, StructField, IntegerType
+
+schema = StructType([
+    StructField('column1', IntegerType(), True),
+    StructField('column2', IntegerType(), True),
+    StructField('column3', IntegerType(), True)
+])
+
+df_with_schema = spark.read.schema(schema).text("path_to_your_text_file.txt")
